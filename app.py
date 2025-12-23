@@ -1,16 +1,20 @@
+# Import required libraries
 from flask import Flask, request, send_file, render_template_string
 from cryptography.fernet import Fernet
 import os
 
+# Initialize Flask application
 app = Flask(__name__)
 
+# Folder where encrypted files are stored
 UPLOAD_FOLDER = "uploads"
 KEY_FILE = "key.key"
 
-# Load encryption key
+# Load encryption key from key.key file
 with open(KEY_FILE, "rb") as key_file:
     key = key_file.read()
 
+# Create fernet object for AES encryption/decryption
 cipher = Fernet(key)
 
 # Simple HTML page
@@ -69,4 +73,5 @@ def download():
     return send_file(temp_file, as_attachment=True)
 
 if __name__ == "__main__":
+
     app.run(debug=True)
